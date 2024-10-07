@@ -1,85 +1,37 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+// 產品資料串接
+// 評論資料串接
+// 建立一個標籤選單做內容切換
+import { ref } from 'vue';
+import ProductPage from "./product/ProductPage.vue";
+import ReviewPage from "./review/ReviewPage.vue";
+let page = ref("product"); // 紀錄一個 page 的響應式狀態, 用來決定要看的是 product or review, default product
+let change = function (clickPage) {
+    page.value = clickPage;
+}
 </script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <nav>
+        <span :class="page === 'product' ? 'current' : ''" @click="change('product')"> 產品資料</span>
+        <span :class="page === 'review' ? 'current' : ''" @click="change('review')"> 評論訊息</span>
+    </nav>
+    <main>
+        <ProductPage v-if="page === 'product'" />
+        <ReviewPage v-if="page === 'review'" />
+    </main>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
 nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+    font-size: 20px;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+nav>span {
+    margin-right: 10px;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+nav>span.current {
+    font-weight: bold;
 }
 </style>

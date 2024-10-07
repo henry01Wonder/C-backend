@@ -1,11 +1,10 @@
-import './assets/main.css'
+// 載入 createApp 函式
+import { createApp } from "vue";
+// 載入根組件
+import App from "./App.vue"
 
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+// 建立 Vue App 物件
+const app = createApp(App);
 
-const app = createApp(App)
-
-app.use(router)
-
-app.mount('#app')
+// 掛載 HTML 標籤底下
+app.mount("#app");
